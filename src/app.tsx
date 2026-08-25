@@ -13,7 +13,7 @@ export const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<Navigate to="/list" />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="*" element={<Navigate to="/" />} />
