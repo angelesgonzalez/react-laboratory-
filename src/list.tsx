@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 interface MemberEntity {
   id: string;
@@ -9,9 +9,12 @@ interface MemberEntity {
 }
 
 export const ListPage: React.FC = () => {
-  const [members, setMembers] = React.useState<MemberEntity[]>([]);
+  const [members, setMembers] = useState<MemberEntity[]>([]);
 
-  const [searchedOrg, setSearchedOrg] = useState('lemoncode')
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchedOrg = searchParams.get('org') ?? 'lemoncode';
+
+  // const [searchedOrg, setSearchedOrg] = useState('lemoncode')
 
   const [userInputSearch, setUserInputSearch] = useState('lemoncode');
 
@@ -24,9 +27,9 @@ export const ListPage: React.FC = () => {
       .then((json) => setMembers(json));
   }, [searchedOrg]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchedOrg(userInputSearch)
+    setSearchParams({ org: userInputSearch })
   }
 
   return (
@@ -35,7 +38,7 @@ export const ListPage: React.FC = () => {
 
       <form onSubmit={handleSearch}>
         <input value={userInputSearch} onChange={e => setUserInputSearch(e.target.value)}></input>
-        <button type="submit" onClick={() => { setSearchedOrg(userInputSearch) }}>Search Organization</button>
+        <button type="submit">Search Organization</button>
       </form>
 
       <div className="list-user-list-container">
