@@ -14,9 +14,7 @@ export const ListPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchedOrg = searchParams.get('org') ?? 'lemoncode';
 
-  // const [searchedOrg, setSearchedOrg] = useState('lemoncode')
-
-  const [userInputSearch, setUserInputSearch] = useState('lemoncode');
+  const [userInputSearch, setUserInputSearch] = useState(searchedOrg);
 
 
 
