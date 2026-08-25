@@ -49,7 +49,7 @@ export const ListPage: React.FC = () => {
           <React.Fragment key={member.id}>
             <img src={member.avatar_url} />
             <span>{member.id}</span>
-            <Link to={`/detail/${member.login}`}>{member.login}</Link>
+            <Link to={`/detail/${member.login}?org=${searchedOrg}`}>{member.login}</Link>
           </React.Fragment>
         ))}
       </div>
