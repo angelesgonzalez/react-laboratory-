@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface MemberEntity {
@@ -10,6 +11,13 @@ interface MemberEntity {
 export const ListPage: React.FC = () => {
   const [members, setMembers] = React.useState<MemberEntity[]>([]);
 
+  const [searchedOrg, setSearchedOrg] = useState('lemoncode')
+
+  const [userInputSearch, setUserInputSearch] = useState('lemoncode');
+
+
+
+
   React.useEffect(() => {
     fetch(`https://api.github.com/orgs/lemoncode/members`)
       .then((response) => response.json())
@@ -19,6 +27,12 @@ export const ListPage: React.FC = () => {
   return (
     <>
       <h2>Hello from List page</h2>
+
+      <form>
+        <input value={userInputSearch} onChange={e => setUserInputSearch(e.target.value)}></input>
+        <button type="button" onClick={() => { setSearchedOrg(userInputSearch) }}>Search Organization</button>
+      </form>
+
       <div className="list-user-list-container">
         <span className="list-header">Avatar</span>
         <span className="list-header">Id</span>
