@@ -19,18 +19,23 @@ export const ListPage: React.FC = () => {
 
 
   React.useEffect(() => {
-    fetch(`https://api.github.com/orgs/lemoncode/members`)
+    fetch(`https://api.github.com/orgs/${searchedOrg}/members`)
       .then((response) => response.json())
       .then((json) => setMembers(json));
-  }, []);
+  }, [searchedOrg]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchedOrg(userInputSearch)
+  }
 
   return (
     <>
       <h2>Hello from List page</h2>
 
-      <form>
+      <form onSubmit={handleSearch}>
         <input value={userInputSearch} onChange={e => setUserInputSearch(e.target.value)}></input>
-        <button type="button" onClick={() => { setSearchedOrg(userInputSearch) }}>Search Organization</button>
+        <button type="submit" onClick={() => { setSearchedOrg(userInputSearch) }}>Search Organization</button>
       </form>
 
       <div className="list-user-list-container">
