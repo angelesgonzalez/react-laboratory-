@@ -12,7 +12,10 @@ export const ListPage: React.FC = () => {
   const [members, setMembers] = useState<MemberEntity[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
+
   const searchedOrg = searchParams.get('org') ?? 'lemoncode';
+
+  const currentPage = Number(searchParams.get('page') ?? '1');
 
   const [userInputSearch, setUserInputSearch] = useState(searchedOrg);
 
@@ -20,10 +23,10 @@ export const ListPage: React.FC = () => {
 
 
   React.useEffect(() => {
-    fetch(`https://api.github.com/orgs/${searchedOrg}/members`)
+    fetch(`https://api.github.com/orgs/${searchedOrg}/members?per_page=10&page=${currentPage}`)
       .then((response) => response.json())
       .then((json) => setMembers(json));
-  }, [searchedOrg]);
+  }, [searchedOrg, currentPage]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
