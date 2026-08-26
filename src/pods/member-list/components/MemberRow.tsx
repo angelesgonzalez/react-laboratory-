@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MemberEntity } from "./types";
+import { MemberEntity } from "../../../core/types";
 
 interface MemberRowProps {
     member: MemberEntity;

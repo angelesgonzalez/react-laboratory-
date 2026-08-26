@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { MemberEntity } from "./types";
+import { MemberEntity } from "../../core/types";
 
 
 export const useOrgMembers = (searchedOrg: string, currentPage: number) => {

@@ -1,9 +1,6 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { useOrgMembers } from "./useOrgMembers";
-import { SearchForm } from "./SearchForm";
-import { MemberRow } from "./MemberRow";
-import { PaginationControl } from "./PaginationControl";
+import { useOrgMembers, SearchForm, MemberRow, PaginationControl } from "./pods/member-list";
 
 
 export const ListPage: React.FC = () => {
