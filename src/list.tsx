@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useOrgMembers } from "./useOrgMembers";
+import { SearchForm } from "./SearchForm";
 
 
 export const ListPage: React.FC = () => {
@@ -12,24 +12,15 @@ export const ListPage: React.FC = () => {
 
   const currentPage = Number(searchParams.get('page') ?? '1');
 
-  const [userInputSearch, setUserInputSearch] = useState(searchedOrg);
-
   const { members, hasNextPage } = useOrgMembers(searchedOrg, currentPage);
 
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearchParams({ org: userInputSearch })
-  }
 
   return (
     <>
       <h2>Hello from List page</h2>
 
-      <form onSubmit={handleSearch}>
-        <input value={userInputSearch} onChange={e => setUserInputSearch(e.target.value)}></input>
-        <button type="submit">Search Organization</button>
-      </form>
+      <SearchForm initialOrg={searchedOrg} onSearch={(org) => setSearchParams({ org })} />
 
       <div className="list-user-list-container">
         <span className="list-header">Avatar</span>
