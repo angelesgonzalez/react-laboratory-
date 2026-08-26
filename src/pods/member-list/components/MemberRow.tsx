@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Avatar, Typography, Link as MuiLink } from "@mui/material";
 import { MemberEntity } from "../../../core/types";
 
 interface MemberRowProps {
@@ -11,9 +12,11 @@ interface MemberRowProps {
 export const MemberRow: React.FC<MemberRowProps> = ({ member, searchedOrg }) => {
     return (
         <React.Fragment>
-            <img src={member.avatar_url} />
-            <span>{member.id}</span>
-            <Link to={`/detail/${member.login}?org=${searchedOrg}`}>{member.login}</Link>
+            <Avatar src={member.avatar_url} alt={member.login} />
+            <Typography>{member.id}</Typography>
+            <MuiLink component={Link} to={`/detail/${member.login}?org=${searchedOrg}`}>
+                {member.login}
+            </MuiLink>
         </React.Fragment>
     );
 };
