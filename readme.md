@@ -17,10 +17,3 @@ Añadí:
 - La organización buscada se guarda en la URL con `useSearchParams`, así que
   al volver de la página de detalle se sigue viendo la organización que
   había tecleado, en vez de resetearse a `lemoncode`.
-
-## Cómo correrlo
-
-```bash
-npm install
-npm start
-```
