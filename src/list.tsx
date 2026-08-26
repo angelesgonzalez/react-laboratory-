@@ -19,12 +19,18 @@ export const ListPage: React.FC = () => {
 
   const [userInputSearch, setUserInputSearch] = useState(searchedOrg);
 
-
+  const [hasNextPage, setHasNextPage] = useState(false);
 
 
   React.useEffect(() => {
     fetch(`https://api.github.com/orgs/${searchedOrg}/members?per_page=10&page=${currentPage}`)
-      .then((response) => response.json())
+      .then((response) => {
+        const linkHeader = response.headers.get('Link');
+        setHasNextPage(linkHeader?.includes('rel="next"') ?? false);
+
+        return response.json()
+      })
+
       .then((json) => setMembers(json));
   }, [searchedOrg, currentPage]);
 
@@ -54,6 +60,18 @@ export const ListPage: React.FC = () => {
           </React.Fragment>
         ))}
       </div>
+
+      <div id="pagination-buttons">
+        <button disabled={currentPage <= 1} onClick={() => setSearchParams(prev => {
+          prev.set('page', String(currentPage - 1));
+          return prev;
+        })}> Anterior </button>
+
+        <button disabled={!hasNextPage} onClick={() => setSearchParams(prev => {
+          prev.set('page', String(currentPage + 1));
+          return prev;
+        })}> Siguiente</button> </div>
+
       <Link to="/detail">Navigate to detail page</Link>
     </>
   );
