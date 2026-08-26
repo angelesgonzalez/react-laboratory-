@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useOrgMembers, SearchForm, MemberRow, PaginationControl } from "./pods/member-list";
+import { Container, Typography, Stack, Link as MuiLink } from "@mui/material";
 
 
 export const ListPage: React.FC = () => {
@@ -16,33 +17,37 @@ export const ListPage: React.FC = () => {
 
 
   return (
-    <>
-      <h2>Hello from List page</h2>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Stack spacing={3}>
+        <Typography variant="h4" component="h2">
+          {searchedOrg} members
+        </Typography>
 
-      <SearchForm initialOrg={searchedOrg} onSearch={(org) => setSearchParams({ org })} />
+        <SearchForm initialOrg={searchedOrg} onSearch={(org) => setSearchParams({ org })} />
 
-      <div className="list-user-list-container">
-        <span className="list-header">Avatar</span>
-        <span className="list-header">Id</span>
-        <span className="list-header">Name</span>
-        {members.map((member) => (
-          <MemberRow key={member.id} member={member} searchedOrg={searchedOrg} />
-        ))}
-      </div>
+        <div className="list-user-list-container">
+          <Typography variant='subtitle1' >Avatar</Typography >
+          <Typography variant='subtitle1' >Id</Typography >
+          <Typography variant='subtitle1' >Name</Typography >
+          {members.map((member) => (
+            <MemberRow key={member.id} member={member} searchedOrg={searchedOrg} />
+          ))}
+        </div>
 
-      <PaginationControl currentPage={currentPage} hasNextPage={hasNextPage}
+        <PaginationControl currentPage={currentPage} hasNextPage={hasNextPage}
 
-        onPrev={() => setSearchParams(prev => {
-          prev.set('page', String(currentPage - 1));
-          return prev;
-        })}
+          onPrev={() => setSearchParams(prev => {
+            prev.set('page', String(currentPage - 1));
+            return prev;
+          })}
 
-        onNext={() => setSearchParams(prev => {
-          prev.set('page', String(currentPage + 1));
-          return prev;
-        })} />
+          onNext={() => setSearchParams(prev => {
+            prev.set('page', String(currentPage + 1));
+            return prev;
+          })} />
 
-      <Link to="/detail">Navigate to detail page</Link>
-    </>
+        <MuiLink component={Link} to="/detail">Navigate to detail page</MuiLink>
+      </Stack>
+    </Container>
   );
 };
