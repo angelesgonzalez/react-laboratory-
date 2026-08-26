@@ -1,15 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { useOrgMembers } from "./useOrgMembers";
 
-interface MemberEntity {
-  id: string;
-  login: string;
-  avatar_url: string;
-}
 
 export const ListPage: React.FC = () => {
-  const [members, setMembers] = useState<MemberEntity[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -19,20 +14,8 @@ export const ListPage: React.FC = () => {
 
   const [userInputSearch, setUserInputSearch] = useState(searchedOrg);
 
-  const [hasNextPage, setHasNextPage] = useState(false);
+  const { members, hasNextPage } = useOrgMembers(searchedOrg, currentPage);
 
-
-  React.useEffect(() => {
-    fetch(`https://api.github.com/orgs/${searchedOrg}/members?per_page=10&page=${currentPage}`)
-      .then((response) => {
-        const linkHeader = response.headers.get('Link');
-        setHasNextPage(linkHeader?.includes('rel="next"') ?? false);
-
-        return response.json()
-      })
-
-      .then((json) => setMembers(json));
-  }, [searchedOrg, currentPage]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
