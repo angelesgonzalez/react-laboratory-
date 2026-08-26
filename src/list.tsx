@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useOrgMembers } from "./useOrgMembers";
 import { SearchForm } from "./SearchForm";
+import { MemberRow } from "./MemberRow";
 
 
 export const ListPage: React.FC = () => {
@@ -27,11 +28,7 @@ export const ListPage: React.FC = () => {
         <span className="list-header">Id</span>
         <span className="list-header">Name</span>
         {members.map((member) => (
-          <React.Fragment key={member.id}>
-            <img src={member.avatar_url} />
-            <span>{member.id}</span>
-            <Link to={`/detail/${member.login}?org=${searchedOrg}`}>{member.login}</Link>
-          </React.Fragment>
+          <MemberRow key={member.id} member={member} searchedOrg={searchedOrg} />
         ))}
       </div>
 
