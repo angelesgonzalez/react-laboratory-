@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { TextField, Button, Stack } from "@mui/material";
 
 interface SearchFormProps {
     initialOrg: string;
@@ -16,10 +16,16 @@ export const SearchForm: React.FC<SearchFormProps> = ({ initialOrg, onSearch }) 
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input value={userInputSearch} onChange={e => setUserInputSearch(e.target.value)} />
-            <button type="submit">Search Organization</button>
-        </form>
+        <Stack component="form" direction="row" spacing={2} onSubmit={handleSubmit}>
+            <TextField
+                label="GitHub organization"
+                size="small"
+                fullWidth
+                value={userInputSearch}
+                onChange={e => setUserInputSearch(e.target.value)}
+            />
+            <Button type="submit" variant="contained">Search</Button>
+        </Stack>
     );
 
 }
